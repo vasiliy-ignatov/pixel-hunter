@@ -3,7 +3,8 @@
 const Game = {
   screens: [],
   counter: 0,
-  getContent: () => {
+  content: document.querySelector(`#main`),
+  getScreens: () => {
     const screens = {
       greeting: document.querySelector(`#greeting`),
       rules: document.querySelector(`#rules`),
@@ -16,17 +17,14 @@ const Game = {
       mConfirm: document.querySelector(`#modal-confirm`)
     };
 
-    for (let key in screens) {
-      if (screens.hasOwnProperty(key)) {
-        Game.screens.push(screens[key]);
-      }
+    for (const key of Object.keys(screens)) {
+      Game.screens.push(screens[key]);
     }
   },
   showScreen: (number) => {
-    const main = document.querySelector(`#main`);
-    const clone = document.importNode(Game.screens[number].content, true);
-    main.innerHTML = ``;
-    main.appendChild(clone);
+    const clone = Game.screens[number].content.cloneNode(true);
+    Game.content.innerHTML = ``;
+    Game.content.appendChild(clone);
   },
   showArrows: () => {
     const template = `<div class="arrows__wrap"><style>
@@ -71,7 +69,7 @@ const Game = {
     }
   },
   init: () => {
-    Game.getContent();
+    Game.getScreens();
     Game.showArrows();
     Game.showScreen(Game.counter);
     document.addEventListener(`keydown`, Game.pressArrow);
