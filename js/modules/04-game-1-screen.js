@@ -61,24 +61,21 @@ const template = `<header class="header">
 
 const element = render(template);
 
-const inputs = element.querySelectorAll(`input[type="radio"]`);
-const checkedInputs = () => {
-  let counter = 0;
+const form = element.querySelector(`form`);
+const inputs = form.querySelectorAll(`input[type="radio"]`);
+
+form.addEventListener(`change`, () => {
+  let checkedRadio = 0;
+  const MIN_CHECKED_RADIO = 2;
+
   inputs.forEach((item) => {
     if (item.checked === true) {
-      counter += 1;
+      checkedRadio += 1;
     }
   });
-  return counter;
-};
-
-inputs.forEach((item) => {
-  item.addEventListener(`change`, () => {
-    const MIN_CHECKED_RADIO = 2;
-    if (checkedInputs() === MIN_CHECKED_RADIO) {
-      changeScreen(gameSecondScreen);
-    }
-  });
+  if (checkedRadio === MIN_CHECKED_RADIO) {
+    changeScreen(gameSecondScreen);
+  }
 });
 
 const buttonBack = element.querySelector(`button.back`);
