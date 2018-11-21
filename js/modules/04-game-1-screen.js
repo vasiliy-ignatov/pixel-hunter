@@ -65,15 +65,11 @@ const form = element.querySelector(`form`);
 const inputs = form.querySelectorAll(`input[type="radio"]`);
 
 form.addEventListener(`change`, () => {
-  let checkedRadio = 0;
-  const MIN_CHECKED_RADIO = 2;
-
-  inputs.forEach((item) => {
-    if (item.checked === true) {
-      checkedRadio += 1;
-    }
+  const checkedInputs = Array.from(inputs).filter((item) => {
+    return item.checked;
   });
-  if (checkedRadio === MIN_CHECKED_RADIO) {
+  const MIN_CHECKED_INPUTS = 2;
+  if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
     changeScreen(gameSecondScreen);
   }
 });
