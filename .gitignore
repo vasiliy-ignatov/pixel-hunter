@@ -13,3 +13,7 @@ node_modules/
 
 # Папка с собранными файлами проекта
 build/
+
+# Другие
+js/main.js.old
+js/screens-for-main.js
