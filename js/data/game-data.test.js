@@ -13,7 +13,7 @@ describe(`Calc game result`, () => {
   });
   it(`should average values`, () => {
     const anyArr = [...new Array(10)].map(() => {
-      return {answer: 1, time: 5000};
+      return {answer: 1, time: 15000};
     });
     assert.equal(calcGameResult(anyArr, INITIAL_GAME.lives), 1150);
   });

@@ -4,8 +4,8 @@ export const calcGameResult = (answers, lives) => {
     return -1;
   } else {
     const CORRECT_ANSWER = 100;
-    const GOOD_TIME = 3000;
-    const BAD_TIME = 10000;
+    const GOOD_TIME = 10000;
+    const BAD_TIME = 20000;
     const BONUS = 50;
 
     const calcAnswers = answers.reduce((prev, cur) => {
