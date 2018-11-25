@@ -1,0 +1,29 @@
+export const calcGameResult = (answers, lives) => {
+  const ANSWERS_LENGTH = 10;
+  if (answers.length !== ANSWERS_LENGTH) {
+    return -1;
+  } else {
+    const CORRECT_ANSWER = 100;
+    const GOOD_TIME = 3000;
+    const BAD_TIME = 10000;
+    const BONUS = 50;
+
+    const calcAnswers = answers.reduce((prev, cur) => {
+      return prev + cur.answer;
+    }, 0) * CORRECT_ANSWER;
+
+    const calcTime = answers.reduce((prev, cur) => {
+      if (cur.time <= GOOD_TIME) {
+        prev += BONUS;
+      } else if (cur.time >= BAD_TIME) {
+        prev -= BONUS;
+      }
+      return prev;
+    }, 0);
+
+    const calcLives = lives * BONUS;
+
+    const result = calcAnswers + calcTime + calcLives;
+    return result > 0 ? result : 0;
+  }
+};
