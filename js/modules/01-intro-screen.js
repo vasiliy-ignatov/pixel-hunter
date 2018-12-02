@@ -1,4 +1,4 @@
-import {render, changeScreen} from './util.js';
+import {getElementFromTemplate, changeScreen} from './util.js';
 import greetingScreen from './02-greeting-screen.js';
 
 const template = `<section class="intro">
@@ -7,7 +7,7 @@ const template = `<section class="intro">
 </section>`;
 
 
-const element = render(template);
+const element = getElementFromTemplate(template);
 const agreeButton = element.querySelector(`button.intro__asterisk`);
 
 agreeButton.addEventListener(`click`, () => {

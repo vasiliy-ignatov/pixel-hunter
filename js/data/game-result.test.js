@@ -10,9 +10,9 @@ describe(`Check game result`, () => {
       return {answer: 1, time: 0};
     });
 
-    assert.equal(calcGameResult([], 0), -1);
-    assert.equal(calcGameResult(smallArr, 0), -1);
-    assert.equal(calcGameResult(largeArr, 0), -1);
+    assert.equal(calcGameResult([], 0), 0);
+    assert.equal(calcGameResult(smallArr, 0), 0);
+    assert.equal(calcGameResult(largeArr, 0), 0);
   });
   it(`should result with average values`, () => {
     const anyArr = [...new Array(10)].map(() => {

@@ -1,7 +1,7 @@
 export const calcGameResult = (answers, lives) => {
   const ANSWERS_LENGTH = 10;
   if (answers.length !== ANSWERS_LENGTH) {
-    return -1;
+    return 0;
   } else {
     const CORRECT_ANSWER = 100;
     const GOOD_TIME = 10000;

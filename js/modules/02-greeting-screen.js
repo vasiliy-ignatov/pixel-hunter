@@ -1,4 +1,4 @@
-import {render, changeScreen} from './util.js';
+import {getElementFromTemplate, changeScreen} from './util.js';
 import rulesScreen from './03-rules-screen.js';
 
 const template = `<section class="greeting central--blur">
@@ -22,10 +22,10 @@ const template = `<section class="greeting central--blur">
   </button>
 </section>`;
 
-const element = render(template);
+const element = getElementFromTemplate(template);
 const agreeButton = element.querySelector(`button.greeting__continue`);
 agreeButton.addEventListener(`click`, () => {
-  changeScreen(rulesScreen);
+  changeScreen(rulesScreen());
 });
 
 export default element;
