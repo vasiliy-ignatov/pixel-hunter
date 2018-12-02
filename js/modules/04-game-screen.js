@@ -2,6 +2,7 @@ import {getElementFromTemplate, changeScreen} from './util.js';
 import getHeader from './header.js';
 import {changeLives} from './../data/change-lives.js';
 import {changeLevel} from './../data/change-level.js';
+import {changeAnswer} from './../data/change-answer.js';
 import getStatsBar from './stats-bar.js';
 import getStatsScreen from './05-stats-screen.js';
 
@@ -10,10 +11,10 @@ const getGameScreen = (levels, newGame) => {
   const level = levels[`level-${game.level}`];
   const checkAnswers = (levelAnswers, userAnswers) => {
     if (levelAnswers.join(``) !== userAnswers.join(``)) {
-      game.answers.push({'answer': 0, 'time': 12000});
+      game = changeAnswer(game, {'answer': 0, 'time': 12000});
       game = changeLives(game, game.lives - 1);
     } else {
-      game.answers.push({'answer': 1, 'time': 12000});
+      game = changeAnswer(game, {'answer': 1, 'time': 12000});
     }
   };
 

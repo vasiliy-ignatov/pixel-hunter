@@ -23,7 +23,11 @@ export const calcGameResult = (answers, lives) => {
 
     const calcLives = lives * BONUS;
 
-    const result = calcAnswers + calcTime + calcLives;
-    return result > 0 ? result : 0;
+    const result = {
+      'levelPoints': calcAnswers,
+      'bonusPoints': calcTime + calcLives,
+      'allPoints': calcAnswers + calcTime + calcLives
+    };
+    return (result.levelPoints + result.bonusPoints > 0) ? result : 0;
   }
 };

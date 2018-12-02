@@ -26,22 +26,23 @@ const getRulesScreen = () => {
 
   const input = element.querySelector(`.rules__input`);
   const button = element.querySelector(`button.rules__button`);
-  const form = element.querySelector(`.rules__form`);
+  const newGame = Object.assign({}, INITIAL_GAME);
+  newGame.answers = [];
 
   input.addEventListener(`keyup`, () => {
     const value = input.value;
 
     if (value.trim().length) {
       button.disabled = false;
+      button.addEventListener(`click`, () => {
+        changeScreen(getGameScreen(levels, newGame));
+      });
     } else {
       button.disabled = true;
+      button.removeEventListener(`click`, () => {
+        changeScreen(getGameScreen(levels, newGame));
+      });
     }
-  });
-
-  const newGame = Object.assign({}, INITIAL_GAME);
-  newGame.answers = [];
-  form.addEventListener(`submit`, () => {
-    changeScreen(getGameScreen(levels, newGame));
   });
 
   return element;

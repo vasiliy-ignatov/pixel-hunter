@@ -4,7 +4,7 @@ import {calcGameResult} from './../data/game-result.js';
 import getStatsBar from './stats-bar.js';
 
 const getStatsScreen = (game) => {
-  const template = `<section class="result">
+  let template = `<section class="result">
     <h2 class="result__title">Победа!</h2>
     <table class="result__table">
       <tr>
@@ -12,7 +12,7 @@ const getStatsScreen = (game) => {
         <td class="stats-bar" colspan="2">
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">${calcGameResult(game.answers, game.lives)[0]}</td>
+        <td class="result__total">${calcGameResult(game.answers, game.lives).levelPoints}</td>
       </tr>
       <tr>
         <td></td>
@@ -36,10 +36,26 @@ const getStatsScreen = (game) => {
         <td class="result__total">-100</td>
       </tr>
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${calcGameResult(game.answers, game.lives)[0] + calcGameResult(game.answers, game.lives)[1]}</td>
+        <td colspan="5" class="result__total  result__total--final">${calcGameResult(game.answers, game.lives).allPoints}</td>
       </tr>
     </table>
   </section>`;
+
+  if (game.lives === 0) {
+    template = `<section class="result">
+      <h2 class="result__title"></h2>
+      <table class="result__table">
+        <tr>
+          <td class="result__number">1.</td>
+          <td class="stats-bar">
+          </td>
+          <td class="result__total"></td>
+          <td class="result__total  result__total--final">fail</td>
+        </tr>
+      </table>
+    </section>`;
+  }
+
 
   const element = getElementFromTemplate(template);
   element.prepend(getHeader());
