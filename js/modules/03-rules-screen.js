@@ -27,7 +27,6 @@ const getRulesScreen = () => {
   const input = element.querySelector(`.rules__input`);
   const button = element.querySelector(`button.rules__button`);
   const newGame = Object.assign({}, INITIAL_GAME);
-  newGame.answers = [];
 
   input.addEventListener(`keyup`, () => {
     const value = input.value;

@@ -4,6 +4,7 @@ import {calcGameResult} from './../data/game-result.js';
 import getStatsBar from './stats-bar.js';
 
 const getStatsScreen = (game) => {
+  const gameResult = calcGameResult(game.answers, game.lives);
   let template = `<section class="result">
     <h2 class="result__title">Победа!</h2>
     <table class="result__table">
@@ -12,7 +13,7 @@ const getStatsScreen = (game) => {
         <td class="stats-bar" colspan="2">
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">${calcGameResult(game.answers, game.lives).levelPoints}</td>
+        <td class="result__total">${gameResult.levelPoints}</td>
       </tr>
       <tr>
         <td></td>
@@ -36,7 +37,7 @@ const getStatsScreen = (game) => {
         <td class="result__total">-100</td>
       </tr>
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${calcGameResult(game.answers, game.lives).allPoints}</td>
+        <td colspan="5" class="result__total  result__total--final">${gameResult.allPoints}</td>
       </tr>
     </table>
   </section>`;
@@ -64,7 +65,7 @@ const getStatsScreen = (game) => {
   statsBar.appendChild(getStatsBar(game));
 
   const title = element.querySelector(`.result__title`);
-  const titleContent = (game.answers.length < 10) ? `Поражение` : `Победа!`;
+  const titleContent = (game.lives === 0) ? `Поражение` : `Победа!`;
   title.textContent = titleContent;
 
   return element;

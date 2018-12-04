@@ -3,7 +3,7 @@ export const changeAnswer = (game, answer) => {
     throw new Error(`answer should be of type object`);
   }
   const newGame = Object.assign({}, game);
-  newGame.answers.push(answer);
+  newGame.answers = newGame.answers.concat([answer]);
 
   return newGame;
 };

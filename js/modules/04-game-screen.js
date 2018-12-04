@@ -20,7 +20,7 @@ const getGameScreen = (levels, newGame) => {
 
   const MAX_GAME_LEVEL = Object.keys(levels).length - 1;
   const changeGameScreen = () => {
-    if (game.level === MAX_GAME_LEVEL || game.lives === 0) {
+    if (game.lives < 0 || game.level === MAX_GAME_LEVEL) {
       changeScreen(getStatsScreen(game));
     } else {
       game = changeLevel(game, game.level += 1);

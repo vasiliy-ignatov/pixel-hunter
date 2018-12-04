@@ -28,6 +28,6 @@ export const calcGameResult = (answers, lives) => {
       'bonusPoints': calcTime + calcLives,
       'allPoints': calcAnswers + calcTime + calcLives
     };
-    return (result.allPoints > 0) ? result : 0;
+    return result;
   }
 };
