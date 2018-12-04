@@ -15,6 +15,7 @@ const getHeader = (state) => {
   </header>`;
 
   if (state) {
+    const MAX_GAME_LIVES = 4;
     headerTemplate = `<header class="header">
       <button class="back">
         <span class="visually-hidden">Вернуться к началу</span>
@@ -27,10 +28,10 @@ const getHeader = (state) => {
       </button>
       <div class="game__timer">${state.time}</div>
       <div class="game__lives">
-        ${new Array(state.lives)
+        ${new Array(state.lives - 1)
           .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
           .join(``)}
-        ${new Array(3 - state.lives)
+        ${new Array(MAX_GAME_LIVES - state.lives)
           .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`)
           .join(``)}
       </div>

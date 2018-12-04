@@ -44,7 +44,7 @@ const getStatsScreen = (game) => {
 
   if (game.lives === 0) {
     template = `<section class="result">
-      <h2 class="result__title"></h2>
+      <h2 class="result__title">Поражение</h2>
       <table class="result__table">
         <tr>
           <td class="result__number">1.</td>
@@ -63,10 +63,6 @@ const getStatsScreen = (game) => {
 
   const statsBar = element.querySelector(`.stats-bar`);
   statsBar.appendChild(getStatsBar(game));
-
-  const title = element.querySelector(`.result__title`);
-  const titleContent = (game.lives === 0) ? `Поражение` : `Победа!`;
-  title.textContent = titleContent;
 
   return element;
 };
