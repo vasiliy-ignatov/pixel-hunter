@@ -10,32 +10,32 @@ describe(`Check game result`, () => {
       return {answer: 1, time: 0};
     });
 
-    assert.equal(calcGameResult([], 0), -1);
-    assert.equal(calcGameResult(smallArr, 0), -1);
-    assert.equal(calcGameResult(largeArr, 0), -1);
+    assert.equal(calcGameResult([], 0), 0);
+    assert.equal(calcGameResult(smallArr, 0), 0);
+    assert.equal(calcGameResult(largeArr, 0), 0);
   });
   it(`should result with average values`, () => {
     const anyArr = [...new Array(10)].map(() => {
       return {answer: 1, time: 15000};
     });
-    assert.equal(calcGameResult(anyArr, 3), 1150);
+    assert.equal(calcGameResult(anyArr, 3).allPoints, 1150);
   });
   it(`should result with bad time`, () => {
     const anyArr = [...new Array(10)].map(() => {
       return {answer: 1, time: 20001};
     });
-    assert.equal(calcGameResult(anyArr, 0), 500);
+    assert.equal(calcGameResult(anyArr, 0).allPoints, 500);
   });
   it(`should result with good time and 0 lives`, () => {
     const anyArr = [...new Array(10)].map(() => {
       return {answer: 1, time: 9999};
     });
-    assert.equal(calcGameResult(anyArr, 0), 1500);
+    assert.equal(calcGameResult(anyArr, 0).allPoints, 1500);
   });
   it(`should result with good time and 2 lives`, () => {
     const anyArr = [...new Array(10)].map(() => {
       return {answer: 1, time: 9999};
     });
-    assert.equal(calcGameResult(anyArr, 2), 1600);
+    assert.equal(calcGameResult(anyArr, 2).allPoints, 1600);
   });
 });

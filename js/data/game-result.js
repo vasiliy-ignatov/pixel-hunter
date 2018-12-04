@@ -1,7 +1,7 @@
 export const calcGameResult = (answers, lives) => {
   const ANSWERS_LENGTH = 10;
   if (answers.length !== ANSWERS_LENGTH) {
-    return -1;
+    return 0;
   } else {
     const CORRECT_ANSWER = 100;
     const GOOD_TIME = 10000;
@@ -23,7 +23,11 @@ export const calcGameResult = (answers, lives) => {
 
     const calcLives = lives * BONUS;
 
-    const result = calcAnswers + calcTime + calcLives;
-    return result > 0 ? result : 0;
+    const result = {
+      'levelPoints': calcAnswers,
+      'bonusPoints': calcTime + calcLives,
+      'allPoints': calcAnswers + calcTime + calcLives
+    };
+    return result;
   }
 };
