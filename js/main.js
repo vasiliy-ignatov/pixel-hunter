@@ -1,10 +1,9 @@
 import {changeScreen} from './modules/util.js';
-import introScreen from './modules/01-intro-screen.js';
-
+import {getIntroScreen} from './modules/intro/intro-screen.js';
 
 const Game = {
   init: () => {
-    changeScreen(introScreen);
+    changeScreen(getIntroScreen());
   }
 };
 

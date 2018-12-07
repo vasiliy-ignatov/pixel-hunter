@@ -21,7 +21,7 @@ export const calcGameResult = (answers, lives) => {
       return prev;
     }, 0);
 
-    const calcLives = lives * BONUS;
+    const calcLives = lives > 0 ? lives * BONUS : 0;
 
     const result = {
       'levelPoints': calcAnswers,
