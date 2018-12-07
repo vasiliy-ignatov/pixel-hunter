@@ -40,8 +40,18 @@ export default class GameDualView extends AbstractView {
   }
   bind() {
     const form = this.element.querySelector(`form`);
+    const inputs = form.querySelectorAll(`input[type="radio"]`);
+
     form.addEventListener(`change`, () => {
-      this.onFormChange();
+      const inputValues = [];
+      const checkedInputs = Array.from(inputs).filter((item) => {
+        if (item.checked === true) {
+          inputValues.push(item.value);
+        }
+        return item.checked;
+      });
+
+      this.onFormChange(checkedInputs, inputValues);
     });
   }
 }

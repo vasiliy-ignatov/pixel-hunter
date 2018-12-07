@@ -27,7 +27,6 @@ export default class GreetingView extends AbstractView {
     </section>`;
   }
   onClick() {
-
   }
   bind() {
     const agreeButton = this.element.querySelector(`button.greeting__continue`);

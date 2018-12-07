@@ -64,10 +64,10 @@ export default class StatisticsView extends AbstractView {
   }
   render() {
     const element = super.render();
-    element.prepend(getInfoBar(this.game));
+    element.prepend(getInfoBar());
 
-    const section = element.querySelector(`section`);
-    section.appendChild(getStatusBar(this.game));
+    const statsBar = element.querySelector(`.stats-bar`);
+    statsBar.appendChild(getStatusBar(this.game));
     return element;
   }
 }

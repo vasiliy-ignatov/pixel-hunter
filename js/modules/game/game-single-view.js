@@ -39,10 +39,14 @@ export default class GameSingleView extends AbstractView {
   }
   bind() {
     const inputs = this.element.querySelectorAll(`input[type="radio"]`);
+    const form = this.element.querySelector(`form`);
 
     inputs.forEach((item) => {
       item.addEventListener(`change`, () => {
-        this.onRadioChange();
+        const activeInput = form.querySelector(`input:checked`);
+        const inputValue = activeInput.value;
+
+        this.onRadioChange(inputValue);
       });
     });
   }

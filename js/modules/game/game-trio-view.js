@@ -31,12 +31,11 @@ export default class GameTrioView extends AbstractView {
   onClick() {
   }
   bind() {
-    const items = this.element.querySelectorAll(`.game__option`);
+    const items = this.element.querySelectorAll(`.game__option img`);
     items.forEach((item) => {
       item.addEventListener(`click`, (evt) => {
-        const element = evt.target.closest(`.game__option`);
-        element.classList.add(`game__option--selected`);
-        this.onClick();
+        const value = evt.target.alt;
+        this.onClick(value);
       });
     });
   }

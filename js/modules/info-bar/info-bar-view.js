@@ -37,7 +37,6 @@ export default class InfoBarView extends AbstractView {
     </header>`;
   }
   onClick() {
-
   }
   bind() {
     const agreeButton = this.element.querySelector(`button.back`);

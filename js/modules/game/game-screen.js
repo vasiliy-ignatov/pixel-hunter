@@ -32,12 +32,7 @@ export const getGameScreen = (levels, state) => {
 
   const getSingleView = () => {
     const template = new GameSingleView(level, state);
-    const form = template.element.querySelector(`form`);
-
-    template.onRadioChange = () => {
-      const activeInput = form.querySelector(`input:checked`);
-      const inputValue = activeInput.value;
-
+    template.onRadioChange = (inputValue) => {
       checkAnswers([inputValue], level.answers);
       changeGameScreen();
     };
@@ -46,19 +41,9 @@ export const getGameScreen = (levels, state) => {
 
   const getDualView = () => {
     const template = new GameDualView(level, state);
-    const form = template.element.querySelector(`form`);
-    const inputs = form.querySelectorAll(`input[type="radio"]`);
     const MIN_CHECKED_INPUTS = 2;
 
-    template.onFormChange = () => {
-      const inputValues = [];
-      const checkedInputs = Array.from(inputs).filter((item) => {
-        if (item.checked === true) {
-          inputValues.push(item.value);
-        }
-        return item.checked;
-      });
-
+    template.onFormChange = (checkedInputs, inputValues) => {
       if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
         checkAnswers(inputValues, level.answers);
         changeGameScreen();
@@ -69,9 +54,7 @@ export const getGameScreen = (levels, state) => {
 
   const getTrioView = () => {
     const template = new GameTrioView(level, state);
-    template.onClick = () => {
-      const selectedImage = template.element.querySelector(`.game__option--selected img`);
-      const value = selectedImage.alt;
+    template.onClick = (value) => {
       checkAnswers([value], level.answers);
       changeGameScreen();
     };
