@@ -4,6 +4,7 @@ import {getInfoBar} from './../info-bar/info-bar-screen.js';
 export default class RulesView extends AbstractView {
   constructor() {
     super();
+    this.infobar = getInfoBar();
   }
   get template() {
     return `<section class="rules">
@@ -25,7 +26,7 @@ export default class RulesView extends AbstractView {
   }
   render() {
     const element = super.render();
-    element.prepend(getInfoBar());
+    element.prepend(this.infobar.element);
 
     return element;
   }

@@ -38,9 +38,17 @@ export default class InfoBarView extends AbstractView {
   }
   onClick() {
   }
+  updateTimer(timer) {
+    this.timer = timer;
+    const timerElement = this.element.querySelector(`.game__timer`);
+    timerElement.textContent = this.timer.value;
+  }
   bind() {
     const agreeButton = this.element.querySelector(`button.back`);
     agreeButton.addEventListener(`click`, () => {
+      if (this.timer) {
+        this.timer.stop();
+      }
       this.onClick();
     });
   }

@@ -1,7 +1,12 @@
 import StatisticsView from './statistics-view.js';
 
-export const getStatictics = (state) => {
-  const template = new StatisticsView(state);
+export default class StatisticsScreen {
+  constructor(stats) {
+    this.stats = stats;
+  }
+  getStatsView() {
+    const template = new StatisticsView(this.stats);
 
-  return template.element;
-};
+    return template.element;
+  }
+}

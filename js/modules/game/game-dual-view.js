@@ -7,6 +7,7 @@ export default class GameDualView extends AbstractView {
     super();
     this.level = level;
     this.game = game;
+    this.infobar = getInfoBar(this.game);
   }
   get template() {
     return `<section class="game">
@@ -30,7 +31,7 @@ export default class GameDualView extends AbstractView {
   }
   render() {
     const element = super.render();
-    element.prepend(getInfoBar(this.game));
+    element.prepend(this.infobar.element);
 
     const section = element.querySelector(`section`);
     section.appendChild(getStatusBar(this.game));

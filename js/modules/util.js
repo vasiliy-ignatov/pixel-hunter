@@ -1,10 +1,10 @@
-export const getElementFromTemplate = (string) => {
+export const render = (template) => {
   const el = document.createElement(`div`);
-  el.innerHTML = string.trim();
+  el.innerHTML = template;
   return el;
 };
 
-export const content = document.querySelector(`#main`);
+const content = document.querySelector(`#main`);
 
 export const changeScreen = (node) => {
   content.innerHTML = ``;

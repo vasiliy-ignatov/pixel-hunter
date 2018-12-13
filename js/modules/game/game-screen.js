@@ -1,78 +1,122 @@
 import {changeScreen} from './../util.js';
-import {changeLives} from './../../data/change-lives.js';
-import {changeLevel} from './../../data/change-level.js';
-import {changeAnswer} from './../../data/change-answer.js';
+import Application from './../application.js';
 import GameSingleView from './game-single-view.js';
 import GameDualView from './game-dual-view.js';
 import GameTrioView from './game-trio-view.js';
-import {getStatictics} from './../statistics/statistics-screen.js';
+import Timer from './../timer.js';
 
-export const getGameScreen = (levels, state) => {
-  let game = state;
-  const level = levels[`level-${game.level}`];
-  const MAX_GAME_LEVEL = Object.keys(levels).length - 1;
+const ANSWER_VALUE = {
+  'correct': 1,
+  'invalid': 0
+};
+const TIMER_VALUE = {
+  'average': 10,
+  'max': 30
+};
+const LENGTH_OF_IMAGES = {
+  'one': 1,
+  'two': 2,
+  'three': 3
+};
 
-  const checkAnswers = (levelAnswers, userAnswers) => {
+export default class GameScreen {
+  constructor(model) {
+    this.model = model;
+    this.level = null;
+    this.timer = null;
+  }
+
+  takeAnswer(levelAnswers, userAnswers) {
     if (levelAnswers.join(``) !== userAnswers.join(``)) {
-      game = changeAnswer(game, {'answer': 0, 'time': 12000});
-      game = changeLives(game, game.lives - 1);
+      this.model.takeAnswer(ANSWER_VALUE.invalid, TIMER_VALUE.average);
+      this.model.decreaseLife();
     } else {
-      game = changeAnswer(game, {'answer': 1, 'time': 12000});
+      this.model.takeAnswer(ANSWER_VALUE.correct, this.timer.value);
     }
-  };
+    this.stopGame();
+    this.nextLevel();
+  }
 
-  const changeGameScreen = () => {
-    if (game.lives < 0 || game.level === MAX_GAME_LEVEL) {
-      changeScreen(getStatictics(game));
+  nextLevel() {
+    if (this.model.isDead() || !this.model.hasNextLevel()) {
+      Application.showStats(this.model.state);
     } else {
-      game = changeLevel(game, game.level += 1);
-      changeScreen(getGameScreen(levels, game));
+      this.model.nextLevel();
+      changeScreen(this.getGameView());
+      this.startGame();
     }
-  };
+  }
 
-  const getSingleView = () => {
-    const template = new GameSingleView(level, state);
+  updateInfoBar(infobar) {
+    if (this.timer.value > TIMER_VALUE.max) {
+      this.model.takeAnswer(ANSWER_VALUE.invalid, TIMER_VALUE.average);
+      this.model.decreaseLife();
+      this.nextLevel();
+    } else {
+      infobar.updateTimer(this.timer);
+    }
+  }
+
+  getSingleView() {
+    const template = new GameSingleView(this.level, this.model.state);
+
+    this.timer.onTick = () => {
+      this.updateInfoBar(template.infobar);
+    };
     template.onRadioChange = (inputValue) => {
-      checkAnswers([inputValue], level.answers);
-      changeGameScreen();
+      this.takeAnswer([inputValue], this.level.answers);
     };
     return template.element;
-  };
+  }
 
-  const getDualView = () => {
-    const template = new GameDualView(level, state);
+  getDualView() {
+    const template = new GameDualView(this.level, this.model.state);
     const MIN_CHECKED_INPUTS = 2;
 
+    this.timer.onTick = () => {
+      this.updateInfoBar(template.infobar);
+    };
     template.onFormChange = (checkedInputs, inputValues) => {
       if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
-        checkAnswers(inputValues, level.answers);
-        changeGameScreen();
+        this.takeAnswer(inputValues, this.level.answers);
       }
     };
     return template.element;
-  };
+  }
 
-  const getTrioView = () => {
-    const template = new GameTrioView(level, state);
+  getTrioView() {
+    const template = new GameTrioView(this.level, this.model.state);
+
+    this.timer.onTick = () => {
+      this.updateInfoBar(template.infobar);
+    };
+
     template.onClick = (value) => {
-      checkAnswers([value], level.answers);
-      changeGameScreen();
+      this.takeAnswer([value], this.level.answers);
     };
     return template.element;
-  };
-
-  const ONE_IMAGE = 1;
-  const TWO_IMAGES = 2;
-  const THREE_IMAGES = 3;
-
-  switch (level.images.length) {
-    case ONE_IMAGE:
-      return getSingleView();
-    case TWO_IMAGES:
-      return getDualView();
-    case THREE_IMAGES:
-      return getTrioView();
-    default:
-      return true;
   }
-};
+
+  getGameView() {
+    this.level = this.model.getCurrentLevel();
+    this.timer = new Timer(this.model.state);
+
+    switch (this.level.images.length) {
+      case LENGTH_OF_IMAGES.one:
+        return this.getSingleView();
+      case LENGTH_OF_IMAGES.two:
+        return this.getDualView();
+      case LENGTH_OF_IMAGES.three:
+        return this.getTrioView();
+      default:
+        return false;
+    }
+  }
+
+  startGame() {
+    this.timer.start();
+  }
+  stopGame() {
+    this.timer.stop();
+  }
+}
