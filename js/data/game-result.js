@@ -3,25 +3,25 @@ export const getGameResult = (answers, lives) => {
   if (answers.length !== ANSWERS_LENGTH) {
     return 0;
   } else {
-    const TIME_RESULTS = {
-      'fast': 10,
-      'slow': 20
+    const TimeResult = {
+      FAST: 10,
+      SLOW: 20
     };
-    const fastAnswersArr = answers.filter((item) => item.time < TIME_RESULTS.fast);
-    const slowAnswersArr = answers.filter((item) => item.time > TIME_RESULTS.slow);
+    const fastAnswersArr = answers.filter((item) => item.time < TimeResult.FAST);
+    const slowAnswersArr = answers.filter((item) => item.time > TimeResult.SLOW);
     const correctAnswer = answers.filter((item) => item.answer > 0);
 
-    const POINTS = {
-      'level': 100,
-      'bonus': 50
+    const Point = {
+      LEVEL: 100,
+      BONUS: 50
     };
 
-    const gamePoints = correctAnswer.length * POINTS.level;
+    const gamePoints = correctAnswer.length * Point.LEVEL;
     const fastAnswers = fastAnswersArr.length;
-    const fastPoints = fastAnswers * POINTS.bonus;
+    const fastPoints = fastAnswers * Point.BONUS;
     const slowAnswers = slowAnswersArr.length;
-    const slowPoints = slowAnswers * POINTS.bonus * -1;
-    const livePoints = lives * POINTS.bonus;
+    const slowPoints = slowAnswers * Point.BONUS * -1;
+    const livePoints = lives * Point.BONUS;
     const allPoints = gamePoints + fastPoints + livePoints + slowPoints;
 
     const result = {

@@ -1,15 +1,12 @@
 import AbstractView from './../abstract-view.js';
 
 const MIN_ANSWERS_LENGTH = 10;
-const values = {
-  'answer': {
-    'invalid': 0
-  },
-  'time': {
-    'fast': 10,
-    'slow': 20
-  }
+const INVALID_ANSWER_VALUE = 0;
+const TimeValue = {
+  FAST: 10,
+  SLOW: 20
 };
+
 
 export default class StatusBarView extends AbstractView {
   constructor(state) {
@@ -19,12 +16,12 @@ export default class StatusBarView extends AbstractView {
   get template() {
     return `<ul class="stats">
       ${this.answers.map((item) => {
-    if (item.answer === values.answer.invalid) {
+    if (item.answer === INVALID_ANSWER_VALUE) {
       return `<li class="stats__result stats__result--wrong"></li>`;
     } else {
-      if (item.time < values.time.fast) {
+      if (item.time < TimeValue.FAST) {
         return `<li class="stats__result stats__result--fast"></li>`;
-      } else if (item.time > values.time.slow) {
+      } else if (item.time > TimeValue.SLOW) {
         return `<li class="stats__result stats__result--slow"></li>`;
       } else {
         return `<li class="stats__result stats__result--correct"></li>`;

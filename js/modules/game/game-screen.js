@@ -5,18 +5,18 @@ import GameDualView from './game-dual-view.js';
 import GameTrioView from './game-trio-view.js';
 import Timer from './../timer.js';
 
-const ANSWER_VALUE = {
-  'correct': 1,
-  'invalid': 0
+const AnswerValue = {
+  CORRECT: 1,
+  INVALID: 0
 };
-const TIMER_VALUE = {
-  'average': 10,
-  'max': 30
+const TimerValue = {
+  AVERAGE: 10,
+  MAX: 30
 };
-const LENGTH_OF_IMAGES = {
-  'one': 1,
-  'two': 2,
-  'three': 3
+const LengthOfImages = {
+  ONE: 1,
+  TWO: 2,
+  THREE: 3
 };
 
 export default class GameScreen {
@@ -24,14 +24,15 @@ export default class GameScreen {
     this.model = model;
     this.level = null;
     this.timer = null;
+    this.template = null;
   }
 
   takeAnswer(levelAnswers, userAnswers) {
     if (levelAnswers.join(``) !== userAnswers.join(``)) {
-      this.model.takeAnswer(ANSWER_VALUE.invalid, TIMER_VALUE.average);
+      this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
     } else {
-      this.model.takeAnswer(ANSWER_VALUE.correct, this.timer.value);
+      this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
     }
     this.stopGame();
     this.nextLevel();
@@ -47,70 +48,66 @@ export default class GameScreen {
     }
   }
 
-  updateInfoBar(infobar) {
-    if (this.timer.value > TIMER_VALUE.max) {
-      this.model.takeAnswer(ANSWER_VALUE.invalid, TIMER_VALUE.average);
+  onTick() {
+    if (this.timer.value > TimerValue.MAX) {
+      this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
       this.nextLevel();
     } else {
-      infobar.updateTimer(this.timer);
+      this.updateTimer();
     }
+  }
+  updateTimer() {
+    this.template.infobar.updateTimer(this.timer);
   }
 
   getSingleView() {
-    const template = new GameSingleView(this.level, this.model.state);
+    this.template = new GameSingleView(this.level, this.model.state);
 
-    this.timer.onTick = () => {
-      this.updateInfoBar(template.infobar);
-    };
-    template.onRadioChange = (inputValue) => {
+    this.template.onRadioChange = (inputValue) => {
       this.takeAnswer([inputValue], this.level.answers);
     };
-    return template.element;
   }
 
   getDualView() {
-    const template = new GameDualView(this.level, this.model.state);
+    this.template = new GameDualView(this.level, this.model.state);
     const MIN_CHECKED_INPUTS = 2;
 
-    this.timer.onTick = () => {
-      this.updateInfoBar(template.infobar);
-    };
-    template.onFormChange = (checkedInputs, inputValues) => {
+    this.template.onFormChange = (checkedInputs, inputValues) => {
       if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
         this.takeAnswer(inputValues, this.level.answers);
       }
     };
-    return template.element;
   }
 
   getTrioView() {
-    const template = new GameTrioView(this.level, this.model.state);
+    this.template = new GameTrioView(this.level, this.model.state);
 
-    this.timer.onTick = () => {
-      this.updateInfoBar(template.infobar);
-    };
-
-    template.onClick = (value) => {
+    this.template.onClick = (value) => {
       this.takeAnswer([value], this.level.answers);
     };
-    return template.element;
   }
 
   getGameView() {
     this.level = this.model.getCurrentLevel();
     this.timer = new Timer(this.model.state);
+    this.timer.onTick = () => {
+      this.onTick();
+    };
 
     switch (this.level.images.length) {
-      case LENGTH_OF_IMAGES.one:
-        return this.getSingleView();
-      case LENGTH_OF_IMAGES.two:
-        return this.getDualView();
-      case LENGTH_OF_IMAGES.three:
-        return this.getTrioView();
-      default:
-        return false;
+      case LengthOfImages.ONE:
+        this.getSingleView();
+        break;
+      case LengthOfImages.TWO:
+        this.getDualView();
+        break;
+      case LengthOfImages.THREE:
+        this.getTrioView();
+        break;
     }
+
+    return this.template.element;
   }
 
   startGame() {
