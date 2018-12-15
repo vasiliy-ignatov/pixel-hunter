@@ -1,26 +1,26 @@
-import {changeTime} from '../data/change-time.js';
 const ONE_SECOND = 1000;
 
 export default class Timer {
-  constructor(state) {
-    this.game = state;
+  constructor() {
+    this._val = 0;
   }
   tick() {
-    this.game = changeTime(this.game);
+    this._val += 1;
     this.onTick();
   }
   onTick() {
   }
   start() {
     this.timer = setTimeout(() => {
-      this.tick();
       this.start();
+      this.tick();
     }, ONE_SECOND);
   }
   stop() {
+    this._val = 0;
     clearTimeout(this.timer);
   }
   get value() {
-    return this.game.time;
+    return this._val;
   }
 }

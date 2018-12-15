@@ -10,7 +10,7 @@ const AnswerValue = {
   INVALID: 0
 };
 const TimerValue = {
-  AVERAGE: 10,
+  AVERAGE: 15,
   MAX: 30
 };
 const LengthOfImages = {
@@ -23,8 +23,11 @@ export default class GameScreen {
   constructor(model) {
     this.model = model;
     this.level = null;
-    this.timer = null;
     this.template = null;
+    this.timer = new Timer();
+    this.timer.onTick = () => {
+      this.onTick();
+    };
   }
 
   takeAnswer(levelAnswers, userAnswers) {
@@ -34,11 +37,11 @@ export default class GameScreen {
     } else {
       this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
     }
-    this.stopGame();
     this.nextLevel();
   }
 
   nextLevel() {
+    this.stopGame();
     if (this.model.isDead() || !this.model.hasNextLevel()) {
       Application.showStats(this.model.state);
     } else {
@@ -49,7 +52,7 @@ export default class GameScreen {
   }
 
   onTick() {
-    if (this.timer.value > TimerValue.MAX) {
+    if (this.timer.value >= TimerValue.MAX) {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
       this.nextLevel();
@@ -90,10 +93,6 @@ export default class GameScreen {
 
   getGameView() {
     this.level = this.model.getCurrentLevel();
-    this.timer = new Timer(this.model.state);
-    this.timer.onTick = () => {
-      this.onTick();
-    };
 
     switch (this.level.images.length) {
       case LengthOfImages.ONE:

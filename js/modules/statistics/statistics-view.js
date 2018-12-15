@@ -1,13 +1,13 @@
 import AbstractView from './../abstract-view.js';
-import {getInfoBar} from './../info-bar/info-bar-screen.js';
-import {getStatusBar} from './../status-bar/status-bar-screen.js';
+import InfoBarScreen from './../info-bar/info-bar-screen.js';
+import StatusBarScreen from './../status-bar/status-bar-screen.js';
 import {getGameResult} from './../../data/game-result.js';
 
 export default class StatisticsView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
-    this.infobar = getInfoBar();
+    this.infobar = new InfoBarScreen(this.game).getInfoBarView();
   }
   get template() {
     const gameResult = getGameResult(this.state.answers, this.state.lives);
@@ -68,7 +68,7 @@ export default class StatisticsView extends AbstractView {
     element.prepend(this.infobar.element);
 
     const statsBar = element.querySelector(`.stats-bar`);
-    statsBar.appendChild(getStatusBar(this.state));
+    statsBar.appendChild(new StatusBarScreen(this.state).getStatusBarView());
     return element;
   }
 }
