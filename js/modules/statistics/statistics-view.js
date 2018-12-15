@@ -7,7 +7,7 @@ export default class StatisticsView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
-    this.infobar = new InfoBarScreen(this.game).getInfoBarView();
+    this.infobar = new InfoBarScreen(this.game).template;
   }
   get template() {
     const gameResult = getGameResult(this.state.answers, this.state.lives);
@@ -68,7 +68,7 @@ export default class StatisticsView extends AbstractView {
     element.prepend(this.infobar.element);
 
     const statsBar = element.querySelector(`.stats-bar`);
-    statsBar.appendChild(new StatusBarScreen(this.state).getStatusBarView());
+    statsBar.appendChild(new StatusBarScreen(this.state).element);
     return element;
   }
 }

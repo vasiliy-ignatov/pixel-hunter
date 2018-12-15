@@ -4,13 +4,9 @@ import Application from './../application.js';
 export default class InfoBarScreen {
   constructor(state) {
     this.state = state;
-  }
-  getInfoBarView() {
-    const template = new InfoBarView(this.state);
-    template.onClick = () => {
+    this.template = new InfoBarView(this.state);
+    this.template.onClick = () => {
       Application.showIntro();
     };
-
-    return template;
   }
 }

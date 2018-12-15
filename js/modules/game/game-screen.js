@@ -1,4 +1,3 @@
-import {changeScreen} from './../util.js';
 import Application from './../application.js';
 import GameSingleView from './game-single-view.js';
 import GameDualView from './game-dual-view.js';
@@ -22,12 +21,25 @@ const LengthOfImages = {
 export default class GameScreen {
   constructor(model) {
     this.model = model;
-    this.level = null;
+    this.level = this.model.getCurrentLevel();
     this.template = null;
     this.timer = new Timer();
     this.timer.onTick = () => {
       this.onTick();
     };
+
+    switch (this.level.images.length) {
+      case LengthOfImages.ONE:
+        this.getSingleView();
+        break;
+      case LengthOfImages.TWO:
+        this.getDualView();
+        break;
+      case LengthOfImages.THREE:
+        this.getTrioView();
+        break;
+    }
+    this.element = this.template.element;
   }
 
   takeAnswer(levelAnswers, userAnswers) {
@@ -46,8 +58,7 @@ export default class GameScreen {
       Application.showStats(this.model.state);
     } else {
       this.model.nextLevel();
-      changeScreen(this.getGameView());
-      this.startGame();
+      Application.updateGame(this.model);
     }
   }
 
@@ -89,24 +100,6 @@ export default class GameScreen {
     this.template.onClick = (value) => {
       this.takeAnswer([value], this.level.answers);
     };
-  }
-
-  getGameView() {
-    this.level = this.model.getCurrentLevel();
-
-    switch (this.level.images.length) {
-      case LengthOfImages.ONE:
-        this.getSingleView();
-        break;
-      case LengthOfImages.TWO:
-        this.getDualView();
-        break;
-      case LengthOfImages.THREE:
-        this.getTrioView();
-        break;
-    }
-
-    return this.template.element;
   }
 
   startGame() {

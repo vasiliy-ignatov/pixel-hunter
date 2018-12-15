@@ -2,13 +2,15 @@ import Application from './../application.js';
 import RulesView from './rules-view.js';
 
 export default class RulesScreen {
-  getRulesView() {
-    const template = new RulesView();
-    const button = template.element.querySelector(`button.rules__button`);
-    const input = template.element.querySelector(`.rules__input`);
+  constructor() {
+    this.template = new RulesView();
+    this.element = this.template.element;
 
-    template.onInputChange = () => {
+    this.template.onInputChange = () => {
+      const button = this.element.querySelector(`button.rules__button`);
+      const input = this.element.querySelector(`.rules__input`);
       const inputValue = input.value;
+
       if (inputValue.trim().length && (button.disabled === true)) {
         button.disabled = false;
         button.addEventListener(`click`, () => {
@@ -20,7 +22,5 @@ export default class RulesScreen {
         });
       }
     };
-
-    return template.element;
   }
 }

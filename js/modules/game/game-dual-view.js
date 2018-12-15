@@ -7,7 +7,7 @@ export default class GameDualView extends AbstractView {
     super();
     this.level = level;
     this.game = game;
-    this.infobar = new InfoBarScreen(this.game).getInfoBarView();
+    this.infobar = new InfoBarScreen(this.game).template;
   }
   get template() {
     return `<section class="game">
@@ -34,7 +34,7 @@ export default class GameDualView extends AbstractView {
     element.prepend(this.infobar.element);
 
     const section = element.querySelector(`section`);
-    section.appendChild(new StatusBarScreen(this.game).getStatusBarView());
+    section.appendChild(new StatusBarScreen(this.game).element);
     return element;
   }
   onFormChange() {

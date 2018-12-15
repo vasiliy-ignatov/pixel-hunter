@@ -9,28 +9,34 @@ import StatisticsScreen from './statistics/statistics-screen.js';
 export default class Application {
   static showIntro() {
     const intro = new IntroScreen();
-    changeScreen(intro.getIntroView());
+    changeScreen(intro.element);
   }
 
   static showGreeting() {
     const greeting = new GreetingScreen();
-    changeScreen(greeting.getGreetingView());
+    changeScreen(greeting.element);
   }
 
   static showRules() {
     const rules = new RulesScreen();
-    changeScreen(rules.getRulesView());
+    changeScreen(rules.element);
   }
 
   static showGame(userName) {
     const model = new GameModel(userName);
     const gameScreen = new GameScreen(model);
-    changeScreen(gameScreen.getGameView());
+    changeScreen(gameScreen.element);
+    gameScreen.startGame();
+  }
+
+  static updateGame(model) {
+    const gameScreen = new GameScreen(model);
+    changeScreen(gameScreen.element);
     gameScreen.startGame();
   }
 
   static showStats(stats) {
     const statistics = new StatisticsScreen(stats);
-    changeScreen(statistics.getStatsView());
+    changeScreen(statistics.element);
   }
 }
