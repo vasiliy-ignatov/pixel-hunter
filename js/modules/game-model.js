@@ -6,7 +6,8 @@ import {changeLives} from './../data/change-lives.js';
 const getLevel = (stateLevel) => levels[`level-${stateLevel}`];
 
 export default class GameModel {
-  constructor(userName) {
+  constructor(data, userName) {
+    this.data = data;
     this.userName = userName;
     this.levels = levels;
     this.restart();

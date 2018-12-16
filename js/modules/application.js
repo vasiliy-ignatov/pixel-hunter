@@ -1,4 +1,3 @@
-import {changeScreen} from './util.js';
 import IntroScreen from './intro/intro-screen.js';
 import GreetingScreen from './greeting/greeting-screen.js';
 import RulesScreen from './rules/rules-screen.js';
@@ -6,10 +5,38 @@ import GameModel from './game-model.js';
 import GameScreen from './game/game-screen.js';
 import StatisticsScreen from './statistics/statistics-screen.js';
 
+const content = document.querySelector(`#main`);
+
+const changeScreen = (node) => {
+  content.innerHTML = ``;
+  content.appendChild(node);
+};
+
+const checkStatus = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+};
+
+let questData;
+
 export default class Application {
   static showIntro() {
     const intro = new IntroScreen();
     changeScreen(intro.element);
+
+    window.fetch(`https://es.dump.academy/pixel-hunter/questions`)
+      .then(checkStatus)
+      .then((response) => response.json())
+      .then((data) => {
+        questData = data;
+      })
+      .then(() => Application.showGreeting())
+      .catch((err) => {
+        throw new Error(`Возникла ошибка при загрузке ` + err);
+      });
   }
 
   static showGreeting() {
@@ -23,7 +50,7 @@ export default class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName);
+    const model = new GameModel(questData, userName);
     const gameScreen = new GameScreen(model);
     changeScreen(gameScreen.element);
     gameScreen.startGame();
