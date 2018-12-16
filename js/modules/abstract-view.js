@@ -1,8 +1,4 @@
-const render = (string) => {
-  const el = document.createElement(`div`);
-  el.innerHTML = string.trim();
-  return el;
-};
+import {render} from './util.js';
 
 class AbstractView {
   constructor() {

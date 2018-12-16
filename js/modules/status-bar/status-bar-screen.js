@@ -1,7 +1,9 @@
 import StatusBarView from './status-bar-view.js';
 
-export const getStatusBar = (state) => {
-  const template = new StatusBarView(state);
-
-  return template.element;
-};
+export default class StatusBarScreen {
+  constructor(state) {
+    this.state = state;
+    this.template = new StatusBarView(this.state);
+    this.element = this.template.element;
+  }
+}

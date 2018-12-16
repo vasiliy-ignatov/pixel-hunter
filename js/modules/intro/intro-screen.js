@@ -1,12 +1,12 @@
-import {changeScreen} from './../util.js';
+import Application from './../application.js';
 import IntroView from './intro-view.js';
-import {getGreetingScreen} from './../greeting/greeting-screen.js';
 
-export const getIntroScreen = () => {
-  const template = new IntroView();
-  template.onClick = () => {
-    changeScreen(getGreetingScreen());
-  };
-
-  return template.element;
-};
+export default class IntroScreen {
+  constructor() {
+    this.template = new IntroView();
+    this.element = this.template .element;
+    this.template.onClick = () => {
+      Application.showGreeting();
+    };
+  }
+}

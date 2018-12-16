@@ -1,9 +1,10 @@
 import AbstractView from './../abstract-view.js';
-import {getInfoBar} from './../info-bar/info-bar-screen.js';
+import InfoBarScreen from './../info-bar/info-bar-screen.js';
 
 export default class RulesView extends AbstractView {
   constructor() {
     super();
+    this.infobar = new InfoBarScreen(this.game).template;
   }
   get template() {
     return `<section class="rules">
@@ -25,7 +26,7 @@ export default class RulesView extends AbstractView {
   }
   render() {
     const element = super.render();
-    element.prepend(getInfoBar());
+    element.prepend(this.infobar.element);
 
     return element;
   }

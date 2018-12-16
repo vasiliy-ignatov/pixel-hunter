@@ -1,12 +1,13 @@
 import AbstractView from './../abstract-view.js';
-import {getInfoBar} from './../info-bar/info-bar-screen.js';
-import {getStatusBar} from './../status-bar/status-bar-screen.js';
+import InfoBarScreen from './../info-bar/info-bar-screen.js';
+import StatusBarScreen from './../status-bar/status-bar-screen.js';
 
 export default class GameTrioView extends AbstractView {
   constructor(level, game) {
     super();
     this.level = level;
     this.game = game;
+    this.infobar = new InfoBarScreen(this.game).template;
   }
   get template() {
     return `<section class="game">
@@ -22,10 +23,10 @@ export default class GameTrioView extends AbstractView {
   }
   render() {
     const element = super.render();
-    element.prepend(getInfoBar(this.game));
+    element.prepend(this.infobar.element);
 
     const section = element.querySelector(`section`);
-    section.appendChild(getStatusBar(this.game));
+    section.appendChild(new StatusBarScreen(this.game).element);
     return element;
   }
   onClick() {

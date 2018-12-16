@@ -1,12 +1,12 @@
-import {changeScreen} from './../util.js';
 import InfoBarView from './info-bar-view.js';
-import {getIntroScreen} from './../intro/intro-screen.js';
+import Application from './../application.js';
 
-export const getInfoBar = (state) => {
-  const template = new InfoBarView(state);
-  template.onClick = () => {
-    changeScreen(getIntroScreen());
-  };
-
-  return template.element;
-};
+export default class InfoBarScreen {
+  constructor(state) {
+    this.state = state;
+    this.template = new InfoBarView(this.state);
+    this.template.onClick = () => {
+      Application.showIntro();
+    };
+  }
+}

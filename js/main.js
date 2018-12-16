@@ -1,10 +1,3 @@
-import {changeScreen} from './modules/util.js';
-import {getIntroScreen} from './modules/intro/intro-screen.js';
+import Application from './modules/application.js';
 
-const Game = {
-  init: () => {
-    changeScreen(getIntroScreen());
-  }
-};
-
-document.addEventListener(`DOMContentLoaded`, Game.init);
+document.addEventListener(`DOMContentLoaded`, Application.showIntro());
