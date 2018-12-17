@@ -1,41 +1,41 @@
 // входной формат данных
 const llevels = [
-  {0: {type: "tinder-like", question: "Угадай, фото или рисунок?", answers: [
-    {0: {image: {
+  {type: "tinder-like", question: "Угадай, фото или рисунок?", answers: [
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "painting"}},
-    {1: {image: {
+    }, type: "painting"},
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "painting"}},
-    {2: {image: {
+    }, type: "painting"},
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "photo"}}
-  ]}},
-  {1: {type: "one-of-three", question: "Найдите рисунок среди изображений", answers: [
-    {0: {image: {
+    }, type: "photo"}
+  ]},
+  {type: "one-of-three", question: "Найдите рисунок среди изображений", answers: [
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "painting"}}
-  ]}},
-  {2: {type: "tinder-like", question: "Угадай, фото или рисунок?", answers: [
-    {0: {image: {
+    }, type: "painting"}
+  ]},
+  {type: "tinder-like", question: "Угадай, фото или рисунок?", answers: [
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "painting"}},
-    {1: {image: {
+    }, type: "painting"},
+    {image: {
       height: 455,
       url: "http://i.imgur.com/jBLSxQ9.png",
       width: 304,
-    }, type: "painting"}}
-  ]}}
+    }, type: "painting"}
+  ]}
 ];
 
 // выходной формат данных
@@ -52,20 +52,23 @@ const levels = {
     'answers': [`photo`]
   }
 };
-const getLevelImages = (answers) => {
-  const images = [];
-  for (const obj of Object.values(answers)) {
-    images.push(obj[Object.keys(obj)].image.url);
+const getLevelOptions = (dataItem) => {
+  const result = {
+    images: dataItem.map((item) => item.image.url),
+    answers: dataItem.map((item) => item.type)
   }
-  return images;
+  return result;
 };
 
-const adaptServerData = (data) => {
+export const adaptServerData = (data) => {
   let newData = {};
-  for (const level of Object.values(data)) {
-    newData[`level-${Object.keys(level)}`] = {};
-    newData[`level-${Object.keys(level)}`].images = getLevelImages(level[Object.keys(level)].answers);
-  }
-};
 
-adaptServerData(llevels);
+  data.forEach((item, i) => {
+    let itemOptions = getLevelOptions(item.answers);
+    newData[`level-${i}`] = {};
+    newData[`level-${i}`].answers = itemOptions.answers;
+    newData[`level-${i}`].images = itemOptions.images;
+  });
+
+  return newData;
+};

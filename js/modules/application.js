@@ -4,6 +4,7 @@ import RulesScreen from './rules/rules-screen.js';
 import GameModel from './game-model.js';
 import GameScreen from './game/game-screen.js';
 import StatisticsScreen from './statistics/statistics-screen.js';
+import {adaptServerData} from './../data/data-adapter.js';
 
 const content = document.querySelector(`#main`);
 
@@ -36,10 +37,11 @@ export default class Application {
       .then(() => Application.showGreeting())
       .catch((err) => {
         throw new Error(`Возникла ошибка при загрузке ` + err);
-      });
+    });
   }
 
   static showGreeting() {
+    console.log(questData, adaptServerData(questData));
     const greeting = new GreetingScreen();
     changeScreen(greeting.element);
   }
