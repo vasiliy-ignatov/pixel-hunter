@@ -7,9 +7,9 @@ const getLevel = (stateLevel) => levels[`level-${stateLevel}`];
 
 export default class GameModel {
   constructor(data, userName) {
-    this.data = data;
+    console.log(data);
     this.userName = userName;
-    this.levels = levels;
+    this.levels = data;
     this.restart();
   }
   get state() {
@@ -28,7 +28,7 @@ export default class GameModel {
     this._state = changeLevel(this._state, this._state.level + 1);
   }
   getCurrentLevel() {
-    return getLevel(this._state.level);
+    return this.levels[`level-${this._state.level}`];
   }
   isDead() {
     return this._state.lives < 0;

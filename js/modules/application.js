@@ -41,7 +41,7 @@ export default class Application {
   }
 
   static showGreeting() {
-    console.log(questData, adaptServerData(questData));
+    console.log(adaptServerData(questData));
     const greeting = new GreetingScreen();
     changeScreen(greeting.element);
   }
@@ -52,7 +52,7 @@ export default class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(questData, userName);
+    const model = new GameModel(adaptServerData(questData), userName);
     const gameScreen = new GameScreen(model);
     changeScreen(gameScreen.element);
     gameScreen.startGame();
