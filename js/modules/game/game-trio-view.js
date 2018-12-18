@@ -8,15 +8,14 @@ export default class GameTrioView extends AbstractView {
     this.level = level;
     this.game = game;
     this.infobar = new InfoBarScreen(this.game).template;
-    console.log(this.level);
   }
   get template() {
     return `<section class="game">
-      <p class="game__task">Найдите рисунок среди изображений</p>
+      <p class="game__task">${this.level.question}</p>
       <form class="game__content  game__content--triple">
         ${this.level.images.map((item, index) => {
     return `<div class="game__option">
-            <img src="${item}" alt="Option ${index + 1}" width="304" height="455">
+            <img src="${item}" alt="Option ${index + 1}" width="304" height="455" data-answer="${this.level.answers[index]}">
           </div>`;
   }).join(``)}
       </form>
@@ -34,10 +33,18 @@ export default class GameTrioView extends AbstractView {
   }
   bind() {
     const items = this.element.querySelectorAll(`.game__option img`);
+    const answerPhotoCounter = this.level.answers.filter((item) => {
+      return item === `photo`;
+    }).length;
+    const correctAnswer = answerPhotoCounter > 1 ? `painting` : `photo`;
+    const getAnswerFlag = (dataAnswer, currentAnswer) => {
+      return dataAnswer === currentAnswer;
+    };
     items.forEach((item) => {
       item.addEventListener(`click`, (evt) => {
-        const value = evt.target.alt;
-        this.onClick(value);
+        const answerValue = evt.target.dataset.answer;
+
+        this.onClick(getAnswerFlag(correctAnswer, answerValue));
       });
     });
   }

@@ -7,7 +7,6 @@ const getLevel = (stateLevel) => levels[`level-${stateLevel}`];
 
 export default class GameModel {
   constructor(data, userName) {
-    console.log(data);
     this.userName = userName;
     this.levels = data;
     this.restart();

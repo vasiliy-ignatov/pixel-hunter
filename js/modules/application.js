@@ -37,11 +37,10 @@ export default class Application {
       .then(() => Application.showGreeting())
       .catch((err) => {
         throw new Error(`Возникла ошибка при загрузке ` + err);
-    });
+      });
   }
 
   static showGreeting() {
-    console.log(adaptServerData(questData));
     const greeting = new GreetingScreen();
     changeScreen(greeting.element);
   }

@@ -3,8 +3,8 @@ import AbstractView from './../abstract-view.js';
 const MIN_ANSWERS_LENGTH = 10;
 const INVALID_ANSWER_VALUE = 0;
 const TimeValue = {
-  FAST: 10,
-  SLOW: 20
+  FAST: 20,
+  SLOW: 10
 };
 
 
@@ -19,9 +19,9 @@ export default class StatusBarView extends AbstractView {
     if (item.answer === INVALID_ANSWER_VALUE) {
       return `<li class="stats__result stats__result--wrong"></li>`;
     } else {
-      if (item.time < TimeValue.FAST) {
+      if (item.time > TimeValue.FAST) {
         return `<li class="stats__result stats__result--fast"></li>`;
-      } else if (item.time > TimeValue.SLOW) {
+      } else if (item.time < TimeValue.SLOW) {
         return `<li class="stats__result stats__result--slow"></li>`;
       } else {
         return `<li class="stats__result stats__result--correct"></li>`;

@@ -8,7 +8,6 @@ export default class GameSingleView extends AbstractView {
     this.level = level;
     this.game = game;
     this.infobar = new InfoBarScreen(this.game).template;
-    console.log(this.level);
   }
   get template() {
     return `

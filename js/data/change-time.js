@@ -3,7 +3,7 @@ export const changeTime = (game) => {
     throw new Error(`Time should be of type number`);
   }
   const newGame = Object.assign({}, game, {
-    time: game.time + 1
+    time: game.time - 1
   });
   return newGame;
 };

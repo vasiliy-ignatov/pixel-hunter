@@ -8,7 +8,6 @@ export default class GameDualView extends AbstractView {
     this.level = level;
     this.game = game;
     this.infobar = new InfoBarScreen(this.game).template;
-    console.log(this.level);
   }
   get template() {
     return `<section class="game">
@@ -54,7 +53,7 @@ export default class GameDualView extends AbstractView {
       });
 
       const getAnswerFlag = () => {
-        return this.level.answers.join(``) === inputValues.join(``)
+        return this.level.answers.join(``) === inputValues.join(``);
       };
 
       this.onFormChange(checkedInputs, getAnswerFlag());

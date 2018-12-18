@@ -10,7 +10,7 @@ const AnswerValue = {
 };
 const TimerValue = {
   AVERAGE: 15,
-  MAX: 30
+  MIN: 0
 };
 const LengthOfImages = {
   ONE: 1,
@@ -44,10 +44,8 @@ export default class GameScreen {
 
   onAnswer(answerFlag) {
     if (answerFlag) {
-      console.log(`answerFlag === true`);
       this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
     } else {
-      console.log(`answerFlag === false`);
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
     }
@@ -65,7 +63,7 @@ export default class GameScreen {
   }
 
   onTick() {
-    if (this.timer.value >= TimerValue.MAX) {
+    if (this.timer.value < TimerValue.MIN) {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
       this.nextLevel();
@@ -99,13 +97,13 @@ export default class GameScreen {
   getTrioView() {
     this.template = new GameTrioView(this.level, this.model.state);
 
-    this.template.onClick = (value) => {
-      this.onAnswer();
+    this.template.onClick = (answerFlag) => {
+      this.onAnswer(answerFlag);
     };
   }
 
   startGame() {
-    // this.timer.start();
+    this.timer.start();
   }
   stopGame() {
     this.timer.stop();
