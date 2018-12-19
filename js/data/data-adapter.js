@@ -8,16 +8,14 @@ const getLevelOptions = (dataItem) => {
 };
 
 export const adaptServerData = (data) => {
-  const newData = [];
-
-  data.map((item) => {
+  const newData = data.map((item) => {
     const obj = {};
     const itemOptions = getLevelOptions(item.answers);
     obj.answers = itemOptions.answers;
     obj.images = itemOptions.images;
     obj.question = item.question;
 
-    newData.push(obj);
+    return obj;
   });
 
   return newData;
