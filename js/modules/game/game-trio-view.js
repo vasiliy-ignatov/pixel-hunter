@@ -33,18 +33,24 @@ export default class GameTrioView extends AbstractView {
   }
   bind() {
     const items = this.element.querySelectorAll(`.game__option img`);
+    const AnswerTypes = {
+      PHOTO: `photo`,
+      PAINT: `painting`
+    };
     const answerPhotoCounter = this.level.answers.filter((item) => {
-      return item === `photo`;
+      return item === AnswerTypes.PHOTO;
     }).length;
-    const correctAnswer = answerPhotoCounter > 1 ? `painting` : `photo`;
+
+    const dataAnswerType = answerPhotoCounter > 1 ? AnswerTypes.PAINT : AnswerTypes.PHOTO;
+
     const getAnswerFlag = (dataAnswer, currentAnswer) => {
       return dataAnswer === currentAnswer;
     };
     items.forEach((item) => {
       item.addEventListener(`click`, (evt) => {
-        const answerValue = evt.target.dataset.answer;
+        const userAnswer = evt.target.dataset.answer;
 
-        this.onClick(getAnswerFlag(correctAnswer, answerValue));
+        this.onClick(getAnswerFlag(dataAnswerType, userAnswer));
       });
     });
   }

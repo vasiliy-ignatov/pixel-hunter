@@ -1,6 +1,6 @@
 const TimeResult = {
-  FAST: 10,
-  SLOW: 20
+  FAST: 20,
+  SLOW: 10
 };
 const Point = {
   LEVEL: 100,
@@ -13,8 +13,8 @@ export const getGameResult = (answers, lives) => {
     return 0;
   } else {
 
-    const fastAnswersArr = answers.filter((item) => item.time < TimeResult.FAST);
-    const slowAnswersArr = answers.filter((item) => item.time > TimeResult.SLOW);
+    const fastAnswersArr = answers.filter((item) => item.time > TimeResult.FAST);
+    const slowAnswersArr = answers.filter((item) => item.time < TimeResult.SLOW);
     const correctAnswer = answers.filter((item) => item.answer > 0);
 
     const result = {

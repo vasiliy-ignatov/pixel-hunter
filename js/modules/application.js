@@ -32,7 +32,7 @@ export default class Application {
       .then(checkStatus)
       .then((response) => response.json())
       .then((data) => {
-        questData = data;
+        questData = adaptServerData(data);
       })
       .then(() => Application.showGreeting())
       .catch((err) => {
@@ -51,7 +51,7 @@ export default class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(adaptServerData(questData), userName);
+    const model = new GameModel(questData, userName);
     const gameScreen = new GameScreen(model);
     changeScreen(gameScreen.element);
     gameScreen.startGame();
