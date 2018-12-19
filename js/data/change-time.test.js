@@ -4,7 +4,7 @@ import {INITIAL_GAME} from './quest.js';
 
 describe(`Check time changer`, () => {
   it(`should update time of the game`, () => {
-    assert.equal(changeTime(INITIAL_GAME).time, 1);
+    assert.equal(changeTime(INITIAL_GAME).time, 29);
   });
 
   it(`should not allow set non number value`, () => {

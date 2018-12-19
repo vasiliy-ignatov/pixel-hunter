@@ -21,7 +21,7 @@ export default class GameSingleView extends AbstractView {
             <span>Фото</span>
           </label>
           <label class="game__answer  game__answer--paint">
-            <input class="visually-hidden" name="question1" type="radio" value="paint">
+            <input class="visually-hidden" name="question1" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>
@@ -46,8 +46,10 @@ export default class GameSingleView extends AbstractView {
       item.addEventListener(`change`, () => {
         const activeInput = form.querySelector(`input:checked`);
         const inputValue = activeInput.value;
-
-        this.onRadioChange(inputValue);
+        const getAnswerFlag = () => {
+          return this.level.answers[0] === inputValue;
+        };
+        this.onRadioChange(getAnswerFlag());
       });
     });
   }

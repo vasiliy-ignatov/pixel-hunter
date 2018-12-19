@@ -6,9 +6,9 @@ import {changeLives} from './../data/change-lives.js';
 const getLevel = (stateLevel) => levels[`level-${stateLevel}`];
 
 export default class GameModel {
-  constructor(userName) {
+  constructor(data, userName) {
+    this.levels = data;
     this.userName = userName;
-    this.levels = levels;
     this.restart();
   }
   get state() {
@@ -27,7 +27,7 @@ export default class GameModel {
     this._state = changeLevel(this._state, this._state.level + 1);
   }
   getCurrentLevel() {
-    return getLevel(this._state.level);
+    return this.levels[this._state.level];
   }
   isDead() {
     return this._state.lives < 0;

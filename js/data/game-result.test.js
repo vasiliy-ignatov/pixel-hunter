@@ -22,19 +22,19 @@ describe(`Check game result`, () => {
   });
   it(`should result with bad time`, () => {
     const anyArr = [...new Array(10)].map(() => {
-      return {answer: 1, time: 21};
+      return {answer: 1, time: 9};
     });
     assert.equal(getGameResult(anyArr, 0).allPoints, 500);
   });
   it(`should result with good time and 0 lives`, () => {
     const anyArr = [...new Array(10)].map(() => {
-      return {answer: 1, time: 5};
+      return {answer: 1, time: 25};
     });
     assert.equal(getGameResult(anyArr, 0).allPoints, 1500);
   });
   it(`should result with good time and 2 lives`, () => {
     const anyArr = [...new Array(10)].map(() => {
-      return {answer: 1, time: 5};
+      return {answer: 1, time: 25};
     });
     assert.equal(getGameResult(anyArr, 2).allPoints, 1600);
   });

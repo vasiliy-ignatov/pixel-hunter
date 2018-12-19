@@ -21,7 +21,7 @@ export default class GameDualView extends AbstractView {
               <span>Фото</span>
             </label>
             <label class="game__answer game__answer--paint">
-              <input class="visually-hidden" name="question${index + 1}" type="radio" value="paint">
+              <input class="visually-hidden" name="question${index + 1}" type="radio" value="painting">
               <span>Рисунок</span>
             </label>
           </div>`;
@@ -52,7 +52,11 @@ export default class GameDualView extends AbstractView {
         return item.checked;
       });
 
-      this.onFormChange(checkedInputs, inputValues);
+      const getAnswerFlag = () => {
+        return this.level.answers.join(``) === inputValues.join(``);
+      };
+
+      this.onFormChange(checkedInputs, getAnswerFlag());
     });
   }
 }

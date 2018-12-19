@@ -10,7 +10,7 @@ const AnswerValue = {
 };
 const TimerValue = {
   AVERAGE: 15,
-  MAX: 30
+  MIN: 0
 };
 const LengthOfImages = {
   ONE: 1,
@@ -42,12 +42,12 @@ export default class GameScreen {
     this.element = this.template.element;
   }
 
-  takeAnswer(levelAnswers, userAnswers) {
-    if (levelAnswers.join(``) !== userAnswers.join(``)) {
+  onAnswer(answerFlag) {
+    if (answerFlag) {
+      this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
+    } else {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
-    } else {
-      this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
     }
     this.nextLevel();
   }
@@ -63,7 +63,7 @@ export default class GameScreen {
   }
 
   onTick() {
-    if (this.timer.value >= TimerValue.MAX) {
+    if (this.timer.value < TimerValue.MIN) {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
       this.nextLevel();
@@ -78,8 +78,8 @@ export default class GameScreen {
   getSingleView() {
     this.template = new GameSingleView(this.level, this.model.state);
 
-    this.template.onRadioChange = (inputValue) => {
-      this.takeAnswer([inputValue], this.level.answers);
+    this.template.onRadioChange = (answerFlag) => {
+      this.onAnswer(answerFlag);
     };
   }
 
@@ -87,9 +87,9 @@ export default class GameScreen {
     this.template = new GameDualView(this.level, this.model.state);
     const MIN_CHECKED_INPUTS = 2;
 
-    this.template.onFormChange = (checkedInputs, inputValues) => {
+    this.template.onFormChange = (checkedInputs, answerFlag) => {
       if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
-        this.takeAnswer(inputValues, this.level.answers);
+        this.onAnswer(answerFlag);
       }
     };
   }
@@ -97,8 +97,8 @@ export default class GameScreen {
   getTrioView() {
     this.template = new GameTrioView(this.level, this.model.state);
 
-    this.template.onClick = (value) => {
-      this.takeAnswer([value], this.level.answers);
+    this.template.onClick = (answerFlag) => {
+      this.onAnswer(answerFlag);
     };
   }
 

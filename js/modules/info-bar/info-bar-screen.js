@@ -6,7 +6,7 @@ export default class InfoBarScreen {
     this.state = state;
     this.template = new InfoBarView(this.state);
     this.template.onClick = () => {
-      Application.showIntro();
+      Application.showGreeting();
     };
   }
 }

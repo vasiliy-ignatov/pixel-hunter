@@ -1,4 +1,8 @@
-import {render} from './util.js';
+const render = (template) => {
+  const el = document.createElement(`div`);
+  el.innerHTML = template;
+  return el;
+};
 
 class AbstractView {
   constructor() {
