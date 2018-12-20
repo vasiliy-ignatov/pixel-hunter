@@ -63,8 +63,5 @@ export default class Application {
       .catch((err) => {
         throw new Error(`Возникла ошибка при загрузке ` + err);
       });
-    // console.log(model.state, userName);
-    // const statistics = new StatisticsScreen(stats);
-    // changeScreen(statistics.element);
   }
 }

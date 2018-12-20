@@ -9,18 +9,16 @@ export default class RulesScreen {
     this.template.onInputChange = () => {
       const button = this.element.querySelector(`button.rules__button`);
       const input = this.element.querySelector(`.rules__input`);
-      const inputValue = input.value;
+      this.inputValue = input.value;
 
-      if (inputValue.trim().length && (button.disabled === true)) {
+      if (this.inputValue.trim().length && (button.disabled === true)) {
         button.disabled = false;
-        button.addEventListener(`click`, () => {
-          Application.showGame(inputValue);
-        });
-      } else if (inputValue.trim().length === 0) {
+      } else if (this.inputValue.trim().length === 0) {
         button.disabled = true;
-        button.removeEventListener(`click`, () => {
-        });
       }
+    };
+    this.template.onButtonClick = () => {
+      Application.showGame(this.inputValue);
     };
   }
 }
