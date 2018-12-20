@@ -4,21 +4,13 @@ import RulesScreen from './rules/rules-screen.js';
 import GameModel from './game-model.js';
 import GameScreen from './game/game-screen.js';
 import StatisticsScreen from './statistics/statistics-screen.js';
-import {adaptServerData} from './../data/data-adapter.js';
+import Loader from './loader.js';
 
 const content = document.querySelector(`#main`);
 
 const changeScreen = (node) => {
   content.innerHTML = ``;
   content.appendChild(node);
-};
-
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
 };
 
 let questData;
@@ -28,11 +20,9 @@ export default class Application {
     const intro = new IntroScreen();
     changeScreen(intro.element);
 
-    window.fetch(`https://es.dump.academy/pixel-hunter/questions`)
-      .then(checkStatus)
-      .then((response) => response.json())
+    Loader.loadData()
       .then((data) => {
-        questData = adaptServerData(data);
+        questData = data;
       })
       .then(() => Application.showGreeting())
       .catch((err) => {
@@ -63,8 +53,18 @@ export default class Application {
     gameScreen.startGame();
   }
 
-  static showStats(stats) {
-    const statistics = new StatisticsScreen(stats);
-    changeScreen(statistics.element);
+  static showStats(model) {
+    const userName = model.userName;
+    Loader.saveResults(model.state, userName)
+      .then(() => Loader.loadResults(userName))
+      .then((data) => {
+        changeScreen(new StatisticsScreen(data).element);
+      })
+      .catch((err) => {
+        throw new Error(`Возникла ошибка при загрузке ` + err);
+      });
+    // console.log(model.state, userName);
+    // const statistics = new StatisticsScreen(stats);
+    // changeScreen(statistics.element);
   }
 }
