@@ -17,7 +17,7 @@ export default class RulesScreen {
         button.disabled = true;
       }
     };
-    this.template.onButtonClick = () => {
+    this.template.onFormSubmit = () => {
       Application.showGame(this.inputValue);
     };
   }

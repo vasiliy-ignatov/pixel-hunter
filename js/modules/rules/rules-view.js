@@ -20,7 +20,7 @@ export default class RulesView extends AbstractView {
       <p class="rules__ready">Готовы?</p>
       <form class="rules__form">
         <input class="rules__input" type="text" placeholder="Ваше Имя">
-        <button class="rules__button  continue" type="button" disabled>Go!</button>
+        <button class="rules__button  continue" type="submit" disabled>Go!</button>
       </form>
     </section>`;
   }
@@ -32,17 +32,17 @@ export default class RulesView extends AbstractView {
   }
   onInputChange() {
   }
-  onButtonClick() {
+  onFormSubmit() {
   }
   bind() {
     const input = this.element.querySelector(`.rules__input`);
-    const button = this.element.querySelector(`button.rules__button`);
+    const form = this.element.querySelector(`form`);
 
     input.addEventListener(`keyup`, () => {
       this.onInputChange();
     });
-    button.addEventListener(`click`, () => {
-      this.onButtonClick();
+    form.addEventListener(`submit`, () => {
+      this.onFormSubmit();
     });
   }
 }
