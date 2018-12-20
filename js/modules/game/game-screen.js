@@ -55,7 +55,7 @@ export default class GameScreen {
   nextLevel() {
     this.stopGame();
     if (this.model.isDead() || !this.model.hasNextLevel()) {
-      Application.showStats(this.model.state);
+      Application.showStats(this.model);
     } else {
       this.model.nextLevel();
       Application.updateGame(this.model);
