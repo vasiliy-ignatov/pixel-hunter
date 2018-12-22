@@ -12,9 +12,21 @@ export const getGameResult = (answers, lives) => {
   if (answers.length !== ANSWERS_LENGTH) {
     return 0;
   } else {
-    const fastAnswers = answers.filter((item) => item.time > TimeResult.FAST);
-    const slowAnswers = answers.filter((item) => item.time < TimeResult.SLOW);
-    const correctAnswers = answers.filter((item) => item.answer > 0);
+    const fastAnswers = [];
+    const slowAnswers = [];
+    const correctAnswers = [];
+
+    for(const item of answers) {
+      if (item.time > TimeResult.FAST) {
+        fastAnswers.push(item);
+      }
+      if (item.time < TimeResult.SLOW) {
+        slowAnswers.push(item);
+      }
+      if (item.answer > 0) {
+        correctAnswers.push(item);
+      }
+    }
 
     const result = {
       get gamePoints() {
