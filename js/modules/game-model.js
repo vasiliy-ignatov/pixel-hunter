@@ -4,7 +4,6 @@ import {changeAnswer} from './../data/change-answer.js';
 import {changeLives} from './../data/change-lives.js';
 
 
-
 export default class GameModel {
   constructor(data, userName) {
     this.levels = data;
@@ -21,8 +20,7 @@ export default class GameModel {
     this._state = changeAnswer(this._state, {'answer': val, 'time': time});
   }
   hasNextLevel() {
-    const getLevel = (stateLevel) => this.levels[stateLevel];
-    return getLevel(this._state.level + 1) !== void 0;
+    return this.levels[this._state.level + 1];
   }
   nextLevel() {
     this._state = changeLevel(this._state, this._state.level + 1);
