@@ -16,7 +16,7 @@ export const getGameResult = (answers, lives) => {
     const slowAnswers = [];
     const correctAnswers = [];
 
-    for(const item of answers) {
+    for (const item of answers) {
       if (item.time > TimeResult.FAST) {
         fastAnswers.push(item);
       }
