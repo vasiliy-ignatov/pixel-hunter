@@ -1,9 +1,9 @@
-import {INITIAL_GAME, levels} from './../data/quest.js';
+import {INITIAL_GAME} from './../data/quest.js';
 import {changeLevel} from './../data/change-level.js';
 import {changeAnswer} from './../data/change-answer.js';
 import {changeLives} from './../data/change-lives.js';
 
-const getLevel = (stateLevel) => levels[`level-${stateLevel}`];
+
 
 export default class GameModel {
   constructor(data, userName) {
@@ -21,6 +21,7 @@ export default class GameModel {
     this._state = changeAnswer(this._state, {'answer': val, 'time': time});
   }
   hasNextLevel() {
+    const getLevel = (stateLevel) => this.levels[stateLevel];
     return getLevel(this._state.level + 1) !== void 0;
   }
   nextLevel() {

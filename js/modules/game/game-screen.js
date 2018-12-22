@@ -12,7 +12,7 @@ const TimerValue = {
   AVERAGE: 15,
   MIN: 0
 };
-const LengthOfImages = {
+const GameType = {
   ONE: 1,
   TWO: 2,
   THREE: 3
@@ -29,13 +29,13 @@ export default class GameScreen {
     };
 
     switch (this.level.images.length) {
-      case LengthOfImages.ONE:
+      case GameType.ONE:
         this.getSingleView();
         break;
-      case LengthOfImages.TWO:
+      case GameType.TWO:
         this.getDualView();
         break;
-      case LengthOfImages.THREE:
+      case GameType.THREE:
         this.getTrioView();
         break;
     }

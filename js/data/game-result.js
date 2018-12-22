@@ -12,23 +12,22 @@ export const getGameResult = (answers, lives) => {
   if (answers.length !== ANSWERS_LENGTH) {
     return 0;
   } else {
-
-    const fastAnswersArr = answers.filter((item) => item.time > TimeResult.FAST);
-    const slowAnswersArr = answers.filter((item) => item.time < TimeResult.SLOW);
-    const correctAnswer = answers.filter((item) => item.answer > 0);
+    const fastAnswers = answers.filter((item) => item.time > TimeResult.FAST);
+    const slowAnswers = answers.filter((item) => item.time < TimeResult.SLOW);
+    const correctAnswers = answers.filter((item) => item.answer > 0);
 
     const result = {
       get gamePoints() {
-        return correctAnswer.length * Point.LEVEL;
+        return correctAnswers.length * Point.LEVEL;
       },
       get fastAnswers() {
-        return fastAnswersArr.length;
+        return fastAnswers.length;
       },
       get fastPoints() {
         return result.fastAnswers * Point.BONUS;
       },
       get slowAnswers() {
-        return slowAnswersArr.length;
+        return slowAnswers.length;
       },
       get slowPoints() {
         return result.slowAnswers * Point.BONUS * -1;

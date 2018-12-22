@@ -2,6 +2,11 @@ import AbstractView from './../abstract-view.js';
 import InfoBarScreen from './../info-bar/info-bar-screen.js';
 import StatusBarScreen from './../status-bar/status-bar-screen.js';
 
+const AnswerTypes = {
+  PHOTO: `photo`,
+  PAINT: `painting`
+};
+
 export default class GameTrioView extends AbstractView {
   constructor(level, game) {
     super();
@@ -33,10 +38,6 @@ export default class GameTrioView extends AbstractView {
   }
   bind() {
     const items = this.element.querySelectorAll(`.game__option img`);
-    const AnswerTypes = {
-      PHOTO: `photo`,
-      PAINT: `painting`
-    };
     const answerPhotoCounter = this.level.answers.filter((item) => {
       return item === AnswerTypes.PHOTO;
     }).length;

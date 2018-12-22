@@ -10,7 +10,7 @@ export default class StatisticsView extends AbstractView {
     this.infobar = new InfoBarScreen(this.game).template;
   }
   get template() {
-    const titleValue = this.scores[0].lives < 0 ? `Поражение` : `Победа`;
+    const titleValue = this.scores[0].lives < 0 ? `Поражение` : `Победа!`;
     return `<section class="result">
       <h2 class="result__title">${titleValue}</h2>
       ${this.scores.map((item, i) => {
