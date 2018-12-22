@@ -12,23 +12,34 @@ export const getGameResult = (answers, lives) => {
   if (answers.length !== ANSWERS_LENGTH) {
     return 0;
   } else {
+    const fastAnswers = [];
+    const slowAnswers = [];
+    const correctAnswers = [];
 
-    const fastAnswersArr = answers.filter((item) => item.time > TimeResult.FAST);
-    const slowAnswersArr = answers.filter((item) => item.time < TimeResult.SLOW);
-    const correctAnswer = answers.filter((item) => item.answer > 0);
+    for (const item of answers) {
+      if (item.time > TimeResult.FAST) {
+        fastAnswers.push(item);
+      }
+      if (item.time < TimeResult.SLOW) {
+        slowAnswers.push(item);
+      }
+      if (item.answer > 0) {
+        correctAnswers.push(item);
+      }
+    }
 
     const result = {
       get gamePoints() {
-        return correctAnswer.length * Point.LEVEL;
+        return correctAnswers.length * Point.LEVEL;
       },
       get fastAnswers() {
-        return fastAnswersArr.length;
+        return fastAnswers.length;
       },
       get fastPoints() {
         return result.fastAnswers * Point.BONUS;
       },
       get slowAnswers() {
-        return slowAnswersArr.length;
+        return slowAnswers.length;
       },
       get slowPoints() {
         return result.slowAnswers * Point.BONUS * -1;

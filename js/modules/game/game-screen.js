@@ -12,7 +12,7 @@ const TimerValue = {
   AVERAGE: 15,
   MIN: 0
 };
-const LengthOfImages = {
+const GameType = {
   ONE: 1,
   TWO: 2,
   THREE: 3
@@ -25,34 +25,34 @@ export default class GameScreen {
     this.template = null;
     this.timer = new Timer();
     this.timer.onTick = () => {
-      this.onTick();
+      this._onTick();
     };
 
     switch (this.level.images.length) {
-      case LengthOfImages.ONE:
-        this.getSingleView();
+      case GameType.ONE:
+        this._getSingleView();
         break;
-      case LengthOfImages.TWO:
-        this.getDualView();
+      case GameType.TWO:
+        this._getDualView();
         break;
-      case LengthOfImages.THREE:
-        this.getTrioView();
+      case GameType.THREE:
+        this._getTrioView();
         break;
     }
     this.element = this.template.element;
   }
 
-  onAnswer(answerFlag) {
+  _onAnswer(answerFlag) {
     if (answerFlag) {
       this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
     } else {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
     }
-    this.nextLevel();
+    this._nextLevel();
   }
 
-  nextLevel() {
+  _nextLevel() {
     this.stopGame();
     if (this.model.isDead() || !this.model.hasNextLevel()) {
       Application.showStats(this.model);
@@ -62,43 +62,43 @@ export default class GameScreen {
     }
   }
 
-  onTick() {
+  _onTick() {
     if (this.timer.value < TimerValue.MIN) {
       this.model.takeAnswer(AnswerValue.INVALID, TimerValue.AVERAGE);
       this.model.decreaseLife();
-      this.nextLevel();
+      this._nextLevel();
     } else {
-      this.updateTimer();
+      this._updateTimer();
     }
   }
-  updateTimer() {
+  _updateTimer() {
     this.template.infobar.updateTimer(this.timer);
   }
 
-  getSingleView() {
+  _getSingleView() {
     this.template = new GameSingleView(this.level, this.model.state);
 
     this.template.onRadioChange = (answerFlag) => {
-      this.onAnswer(answerFlag);
+      this._onAnswer(answerFlag);
     };
   }
 
-  getDualView() {
+  _getDualView() {
     this.template = new GameDualView(this.level, this.model.state);
     const MIN_CHECKED_INPUTS = 2;
 
     this.template.onFormChange = (checkedInputs, answerFlag) => {
       if (checkedInputs.length >= MIN_CHECKED_INPUTS) {
-        this.onAnswer(answerFlag);
+        this._onAnswer(answerFlag);
       }
     };
   }
 
-  getTrioView() {
+  _getTrioView() {
     this.template = new GameTrioView(this.level, this.model.state);
 
     this.template.onClick = (answerFlag) => {
-      this.onAnswer(answerFlag);
+      this._onAnswer(answerFlag);
     };
   }
 
