@@ -6,9 +6,9 @@ const Point = {
   LEVEL: 100,
   BONUS: 50
 };
+const ANSWERS_LENGTH = 10;
 
 export const getGameResult = (answers, lives) => {
-  const ANSWERS_LENGTH = 10;
   if (answers.length !== ANSWERS_LENGTH) {
     return 0;
   } else {

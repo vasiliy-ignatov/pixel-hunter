@@ -5,6 +5,9 @@ export default class Timer {
   constructor() {
     this._val = INIT_TIMER_VALUE;
   }
+  get value() {
+    return this._val;
+  }
   tick() {
     this._val -= 1;
     this.onTick();
@@ -20,8 +23,5 @@ export default class Timer {
   stop() {
     this._val = INIT_TIMER_VALUE;
     clearTimeout(this.timer);
-  }
-  get value() {
-    return this._val;
   }
 }
