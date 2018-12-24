@@ -42,6 +42,14 @@ export default class GameScreen {
     this.element = this.template.element;
   }
 
+  startGame() {
+    this.timer.start();
+  }
+
+  stopGame() {
+    this.timer.stop();
+  }
+
   _onAnswer(answerFlag) {
     if (answerFlag) {
       this.model.takeAnswer(AnswerValue.CORRECT, this.timer.value);
@@ -100,12 +108,5 @@ export default class GameScreen {
     this.template.onClick = (answerFlag) => {
       this._onAnswer(answerFlag);
     };
-  }
-
-  startGame() {
-    this.timer.start();
-  }
-  stopGame() {
-    this.timer.stop();
   }
 }

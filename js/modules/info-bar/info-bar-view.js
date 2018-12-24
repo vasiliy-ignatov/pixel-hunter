@@ -1,12 +1,15 @@
 import AbstractView from './../abstract-view.js';
 
+const ALERT_TIME_VALUE = 5;
+const EVEN_NUMBER = 2;
+const MAX_GAME_LIVES = 3;
+
 export default class InfoBarView extends AbstractView {
   constructor(state) {
     super();
     this.state = state;
   }
   get template() {
-    const MAX_GAME_LIVES = 3;
     const getState = () => {
       if (this.state) {
         return `<div class="game__timer">${this.state.time}</div>
@@ -42,6 +45,14 @@ export default class InfoBarView extends AbstractView {
     this.timer = timer;
     const timerElement = this.element.querySelector(`.game__timer`);
     timerElement.textContent = this.timer.value;
+
+    if (this.timer.value <= ALERT_TIME_VALUE) {
+      if (this.timer.value % EVEN_NUMBER !== 0) {
+        timerElement.style.color = `red`;
+      } else {
+        timerElement.style.color = ``;
+      }
+    }
   }
   bind() {
     const agreeButton = this.element.querySelector(`button.back`);
